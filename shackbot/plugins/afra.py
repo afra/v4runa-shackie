@@ -8,6 +8,12 @@ _OPEN = 1
 _CLOSED = 2
 _UNKNOWN = 3
 
+def kick_space():
+    """ called from an external trigger.
+    will be called regular when the door is
+    open"""
+    store.set('door_kicked_timestamp', datetime.now().timestamp())
+
 def set_space(state):
     store.set('open', state)
     # seconds ince epoch
@@ -73,3 +79,6 @@ def open_set(parsed, user, target, text):
     bot = Bot()
     set_space(_CLOSED)
     bot.say(target, "Noted.")
+
+if __name__ == '__main__':
+    kicked()
