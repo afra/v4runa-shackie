@@ -25,7 +25,7 @@ def set_space(state):
 def get_float(store_name):
     value = store.get(store_name)
     if not value:
-        return 0.0
+        return float(0.0)
     value = float(value)
     return value
 
@@ -37,14 +37,14 @@ def get_space():
     if not irc_open and not irc_closed and not kicked:
         return _UNKNOWN
 
-    now = datetime.now()
+    now = datetime.now().timestamp()
     if (irc_closed + 20 * 60) > now:
         #                20 min
         return (_CLOSED, irc_closed)
-    elif (irc_open + 4 * 60 * 60) > now():
+    elif (irc_open + 4 * 60 * 60) > now:
         #                   4 h
         return (_OPEN, irc_open)
-    elif (kicked + 15 * 60) > now():
+    elif (kicked + 15 * 60) > now:
         #                 15 min
         return (_OPEN, kicked)
     else:
