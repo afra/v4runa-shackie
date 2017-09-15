@@ -42,7 +42,7 @@ def open_set(parsed, user, target, text):
     set_space(_OPEN)
     bot.say(target, "Noted.")
 
-@bot_command('close!')
+@bot_command('closed!')
 def open_set(parsed, user, target, text):
     bot = Bot()
     set_space(_CLOSED)
