@@ -11,5 +11,12 @@ def get_command_if_bot_message(message, nickname, bot_char):
         return command
 
     elif message.startswith(bot_char):
+        debugmsg = message
         message = message[1:]
+        if not message:
+            print("message to small. '%s'", debugmsg)
+            return ""
+        if not message.split():
+            print("message.split() '%s'", debugmsg)
+            return ""
         return message.split()[0]
