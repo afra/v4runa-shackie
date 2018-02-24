@@ -8,6 +8,7 @@ from registry import bot_command
 from storage import store
 
 from hbmqtt.client import MQTTClient, ClientException
+from hbmqtt.mqtt.constants import QOS_2
 
 try:
     from config import AFRA_TOKEN
@@ -61,7 +62,7 @@ def wait_kick_space():
         mqcli = MQTTClient()
         yield from mqcli.connect('mqtt://localhost/')
         yield from mqcli.subscribe([
-            ('afra/door'),
+            ('afra/door', QOS_2),
             ])
         yield from mqcli.deliver_message()
         # TODO: ignoring the payload for now
