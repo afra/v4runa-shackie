@@ -8,14 +8,21 @@ _OPEN = 1
 _CLOSED = 2
 _UNKNOWN = 3
 
+
+def check_state_change():
+    ts_state = get_space()
+    state = store.get('open')
+    if ts_state != state:
+        store.set('open', ts_state)
+
 def kick_space():
     """ called from an external trigger.
     will be called regular when the door is
     open"""
     store.set('door_kicked_timestamp', datetime.now().timestamp())
+    check_state_change()
 
 def set_space(state):
-    store.set('open', state)
     # seconds ince epoch
     if state == _OPEN:
         store.set('door_irc_open_timestamp', datetime.now().timestamp())
@@ -72,10 +79,12 @@ def open_get(parsed, user, target, text):
 def open_set(parsed, user, target, text):
     bot = Bot()
     set_space(_OPEN)
+    check_state_change()
     bot.say(target, "Noted.")
 
 @bot_command('closed!')
 def closed_set(parsed, user, target, text):
     bot = Bot()
     set_space(_CLOSED)
+    check_state_change()
     bot.say(target, "Noted.")
