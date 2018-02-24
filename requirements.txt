@@ -2,6 +2,7 @@ aiohttp
 asyncio-irc
 beautifulsoup4
 feedparser
+hbmqtt
 lxml
 python-dateutil
 pytz
