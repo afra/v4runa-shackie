@@ -75,7 +75,7 @@ def open_set(parsed, user, target, text):
     bot.say(target, "Noted.")
 
 @bot_command('closed!')
-def open_set(parsed, user, target, text):
+def closed_set(parsed, user, target, text):
     bot = Bot()
     set_space(_CLOSED)
     bot.say(target, "Noted.")
