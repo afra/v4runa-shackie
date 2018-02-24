@@ -135,3 +135,5 @@ def closed_set(parsed, user, target, text):
     set_space(_CLOSED)
     check_state_change()
     bot.say(target, "Noted.")
+
+asyncio.ensure_future(wait_kick_space())
