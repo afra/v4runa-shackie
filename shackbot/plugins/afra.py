@@ -34,12 +34,22 @@ async def update_spaceapi(state):
     except:
         return None
 
+def say_state(state):
+    human = {
+        _OPEN: "open",
+        _CLOSED: "close",
+        _UNKNOWN: "unknown",
+        }
+    bot = Bot()
+    bot.say("The space is now %s" % human[state])
+
 def check_state_change():
     ts_state = get_space()
     state = store.get('open')
     if ts_state != state:
         update_spaceapi(ts_state)
         store.set('open', ts_state)
+        say_state(ts_state)
 
 @asyncio.coroutine
 def wait_kick_space():
