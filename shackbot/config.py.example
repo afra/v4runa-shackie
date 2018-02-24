@@ -11,3 +11,7 @@ REDIS = {
     'PORT': 6379,
     'DB': 0,
 }
+
+# used to access the afra space api
+# see rustyearth code.fe80.eu
+AFRA_TOKEN = 'Hee2noh8aic3iech'

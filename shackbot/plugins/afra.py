@@ -1,4 +1,6 @@
 import asyncio
+import async_timeout
+import aiohttp
 from datetime import datetime
 
 from bot import Bot
@@ -7,15 +9,36 @@ from storage import store
 
 from hbmqtt.client import MQTTClient, ClientException
 
+try:
+    from config import AFRA_TOKEN
+except ImportError:
+    AFRA_TOKEN = "foo"
+
 _OPEN = 1
 _CLOSED = 2
 _UNKNOWN = 3
 
+async def update_spaceapi(state):
+    if state not in [_OPEN, _CLOSED]:
+        # TODO: unknown states
+        return
+
+    state = 0 if state == _CLOSED else 1
+    url = 'https://spaceapi.afra.fe80.eu/status/{}/{}'.format(AFRA_TOKEN, state)
+
+    try:
+        async with aiohttp.ClientSession(raise_for_status=True) as session:
+            with async_timeout.timeout(5):
+                async with session.put(url) as resp:
+                    return await resp.text()
+    except:
+        return None
 
 def check_state_change():
     ts_state = get_space()
     state = store.get('open')
     if ts_state != state:
+        update_spaceapi(ts_state)
         store.set('open', ts_state)
 
 @asyncio.coroutine
