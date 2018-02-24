@@ -45,7 +45,7 @@ def say_state(state):
     bot.say("The space is now %s" % human[state])
 
 def check_state_change():
-    ts_state = get_space()
+    ts_state, _ = get_space()
     state = store.get('open')
     if ts_state != state:
         update_spaceapi(ts_state)
