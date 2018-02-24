@@ -4,6 +4,9 @@ from bot import Bot
 from registry import bot_command
 from storage import store
 
+import asyncio
+from hbmqtt.client import MQTTClient, ClientException
+
 _OPEN = 1
 _CLOSED = 2
 _UNKNOWN = 3
@@ -15,12 +18,22 @@ def check_state_change():
     if ts_state != state:
         store.set('open', ts_state)
 
-def kick_space():
+@asyncio.coroutine
+def wait_kick_space():
     """ called from an external trigger.
     will be called regular when the door is
     open"""
-    store.set('door_kicked_timestamp', datetime.now().timestamp())
-    check_state_change()
+
+    while True:
+        mqcli = MQTTClient()
+        yield from mqcli.connect('mqtt://localhost/')
+        yield from mqcli.subscribe([
+            ('afra/door'),
+            ])
+        yield from mqcli.deliver_message()
+        # TODO: ignoring the payload for now
+        store.set('door_kicked_timestamp', datetime.now().timestamp())
+        check_state_change()
 
 def set_space(state):
     # seconds ince epoch
