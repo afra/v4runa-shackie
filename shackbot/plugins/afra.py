@@ -42,7 +42,7 @@ def say_state(state):
         _UNKNOWN: "unknown",
         }
     bot = Bot()
-    bot.say("The space is now %s" % human[state])
+    bot.say("#afra", "The space is now %s" % human[state])
 
 def check_state_change():
     ts_state, _ = get_space()
