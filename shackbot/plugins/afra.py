@@ -97,12 +97,13 @@ def get_space():
         return (_UNKNOWN, '0.0')
 
     now = datetime.now().timestamp()
-    if (irc_closed + 20 * 60) > now:
-        #                20 min
-        return (_CLOSED, irc_closed)
-    elif (irc_open + 4 * 60 * 60) > now:
+    if (irc_open > irc_closed) and \
+            (irc_open + 4 * 60 * 60) > now:
         #                   4 h
         return (_OPEN, irc_open)
+    elif (irc_closed + 20 * 60) > now:
+        #                20 min
+        return (_CLOSED, irc_closed)
     elif (kicked + 15 * 60) > now:
         #                 15 min
         return (_OPEN, kicked)
