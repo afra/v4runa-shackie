@@ -1,0 +1,17 @@
+[Unit]
+Description=the bot v4runa living in #afra on freenode
+
+[Service]
+User=afra
+Group=afra
+
+Type=simple
+ExecStart=/home/afra/venv/bin/python /home/afra/shackie/shackbot/main.py
+WorkingDirectory=/home/afra/shackie/shackbot/
+
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
