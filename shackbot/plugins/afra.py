@@ -63,9 +63,10 @@ async def check_state_change():
 
 @asyncio.coroutine
 async def wait_kick_space():
-    """ called from an external trigger.
-    will be called regular when the door is
-    open"""
+    """
+    The external device will publish a mqtt event.
+    This function handles this event.
+    """
 
     while True:
         mqcli = MQTTClient()
@@ -79,6 +80,7 @@ async def wait_kick_space():
         await check_state_change()
 
 def set_space(state):
+    """ use when setting the space manually """
     # seconds ince epoch
     if state == _OPEN:
         store.set('door_irc_open_timestamp', datetime.now().timestamp())
@@ -86,6 +88,7 @@ def set_space(state):
         store.set('door_irc_closed_timestamp', datetime.now().timestamp())
 
 def get_space():
+    """ calculate by the timestamps if the space is open or not """
     irc_open = get_float('door_irc_open_timestamp')
     irc_closed = get_float('door_irc_closed_timestamp')
     kicked = get_float('door_kicked_timestamp')
