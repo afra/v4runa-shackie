@@ -11,6 +11,11 @@ from hbmqtt.client import MQTTClient, ClientException
 from hbmqtt.mqtt.constants import QOS_2
 
 try:
+    from config import AFRA_NOTIFICATION_CHANNELS
+except ImportError:
+    AFRA_NOTIFICATION_CHANNELS = ["#afra-test"]
+
+try:
     from config import AFRA_TOKEN
 except ImportError:
     AFRA_TOKEN = "foo"
@@ -35,14 +40,18 @@ async def update_spaceapi(state):
     except:
         return None
 
-def say_state(state):
+def say_state(state, target=None):
     human = {
         _OPEN: "open",
         _CLOSED: "close",
         _UNKNOWN: "unknown",
         }
     bot = Bot()
-    bot.say("#afra", "The space is now %s" % human[state])
+    if target:
+        bot.say(target, "The space is now %s" % human[state])
+    else:
+        for channel in AFRA_NOTIFICATION_CHANNELS:
+            bot.say(channel, "The space is now %s" % human[state])
 
 async def check_state_change():
     ts_state, _ = get_space()
