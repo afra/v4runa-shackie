@@ -5,7 +5,7 @@ from datetime import datetime
 
 from bot import Bot
 from registry import bot_command
-from storage import store
+from storage import store, get_float
 
 from hbmqtt.client import MQTTClient, ClientException
 from hbmqtt.mqtt.constants import QOS_2
@@ -75,13 +75,6 @@ def set_space(state):
         store.set('door_irc_open_timestamp', datetime.now().timestamp())
     else:
         store.set('door_irc_closed_timestamp', datetime.now().timestamp())
-
-def get_float(store_name):
-    value = store.get(store_name)
-    if not value:
-        return float(0.0)
-    value = float(value)
-    return value
 
 def get_space():
     irc_open = get_float('door_irc_open_timestamp')
