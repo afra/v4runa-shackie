@@ -44,7 +44,7 @@ def say_state(state):
     bot = Bot()
     bot.say("#afra", "The space is now %s" % human[state])
 
-def check_state_change():
+async def check_state_change():
     ts_state, _ = get_space()
     state = store.get('open')
     if ts_state != state:
@@ -53,21 +53,21 @@ def check_state_change():
         say_state(ts_state)
 
 @asyncio.coroutine
-def wait_kick_space():
+async def wait_kick_space():
     """ called from an external trigger.
     will be called regular when the door is
     open"""
 
     while True:
         mqcli = MQTTClient()
-        yield from mqcli.connect('mqtt://localhost/')
-        yield from mqcli.subscribe([
+        await mqcli.connect('mqtt://localhost/')
+        await mqcli.subscribe([
             ('afra/door', QOS_2),
             ])
-        yield from mqcli.deliver_message()
+        await mqcli.deliver_message()
         # TODO: ignoring the payload for now
         store.set('door_kicked_timestamp', datetime.now().timestamp())
-        check_state_change()
+        await check_state_change()
 
 def set_space(state):
     # seconds ince epoch
@@ -123,17 +123,17 @@ def open_get(parsed, user, target, text):
         bot.say(target, "Who knows if the space is open or not")
 
 @bot_command('open!')
-def open_set(parsed, user, target, text):
+async def open_set(parsed, user, target, text):
     bot = Bot()
     set_space(_OPEN)
-    check_state_change()
+    await check_state_change()
     bot.say(target, "Noted.")
 
 @bot_command('closed!')
-def closed_set(parsed, user, target, text):
+async def closed_set(parsed, user, target, text):
     bot = Bot()
     set_space(_CLOSED)
-    check_state_change()
+    await check_state_change()
     bot.say(target, "Noted.")
 
 asyncio.ensure_future(wait_kick_space())
