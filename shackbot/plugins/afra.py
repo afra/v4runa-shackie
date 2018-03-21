@@ -89,7 +89,7 @@ def get_space():
     kicked = get_float('door_kicked_timestamp')
 
     if not irc_open and not irc_closed and not kicked:
-        return _UNKNOWN
+        return (_UNKNOWN, '0.0')
 
     now = datetime.now().timestamp()
     if (irc_closed + 20 * 60) > now:
