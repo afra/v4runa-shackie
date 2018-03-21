@@ -43,15 +43,15 @@ async def update_spaceapi(state):
 def say_state(state, target=None):
     human = {
         _OPEN: "open",
-        _CLOSED: "close",
-        _UNKNOWN: "unknown",
+        _CLOSED: "closed",
+        _UNKNOWN: "in an unknown state",
         }
     bot = Bot()
     if target:
-        bot.say(target, "The space is now %s" % human[state])
+        bot.say(target, "The space is now %s." % human[state])
     else:
         for channel in AFRA_NOTIFICATION_CHANNELS:
-            bot.say(channel, "The space is now %s" % human[state])
+            bot.say(channel, "The space is now %s." % human[state])
 
 async def check_state_change():
     ts_state, _ = get_space()
