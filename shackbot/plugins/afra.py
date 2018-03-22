@@ -57,8 +57,8 @@ async def check_state_change():
     ts_state, _ = get_space()
     state = store.get('open')
     if str(ts_state) != str(state, 'utf-8'):
-        await update_spaceapi(ts_state)
         store.set('open', ts_state)
+        await update_spaceapi(ts_state)
         say_state(ts_state)
 
 @asyncio.coroutine
