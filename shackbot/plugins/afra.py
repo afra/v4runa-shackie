@@ -62,6 +62,18 @@ async def check_state_change():
         say_state(ts_state)
 
 @asyncio.coroutine
+async def check_room_status():
+    """
+    Checks periodically if the space is open or closed.
+    The Open status can be easily checked, because
+    an event must happen.
+    To close the afra without a command, timers must be checked.
+    """
+    while True:
+        check_state_change()
+        await asyncio.sleep(60)
+
+@asyncio.coroutine
 async def wait_kick_space():
     """
     The external device will publish a mqtt event.
@@ -143,3 +155,4 @@ async def closed_set(parsed, user, target, text):
     bot.say(target, "Noted.")
 
 asyncio.ensure_future(wait_kick_space())
+asyncio.ensure_future(check_closed())
