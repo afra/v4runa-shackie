@@ -155,4 +155,4 @@ async def closed_set(parsed, user, target, text):
     bot.say(target, "Noted.")
 
 asyncio.ensure_future(wait_kick_space())
-asyncio.ensure_future(check_closed())
+asyncio.ensure_future(check_room_status())
