@@ -70,7 +70,7 @@ async def check_room_status():
     To close the afra without a command, timers must be checked.
     """
     while True:
-        check_state_change()
+        await check_state_change()
         await asyncio.sleep(60)
 
 @asyncio.coroutine
