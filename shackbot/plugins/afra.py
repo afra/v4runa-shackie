@@ -147,7 +147,7 @@ async def open_set(parsed, user, target, text):
     await check_state_change()
     bot.say(target, "Noted.")
 
-@bot_command('closed!')
+@bot_command('close!')
 async def closed_set(parsed, user, target, text):
     bot = Bot()
     set_space(_CLOSED)
