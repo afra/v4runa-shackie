@@ -1,5 +1,5 @@
 aiohttp
-asyncio-irc
+-e git+https://github.com/lynxis/asyncirc.git#egg=asyncirc
 beautifulsoup4
 feedparser
 hbmqtt
