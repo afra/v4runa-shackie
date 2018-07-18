@@ -152,7 +152,7 @@ async def open_set(parsed, user, target, text):
 async def close_set(parsed, user, target, text):
     await closed_set(parsed, user, target, text)
 
-@bot_command('closed!')
+@bot_command('close!')
 async def closed_set(parsed, user, target, text):
     bot = Bot()
     set_space(_CLOSED)
