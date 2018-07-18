@@ -148,6 +148,10 @@ async def open_set(parsed, user, target, text):
     bot.say(target, "Noted.")
     bot.say(target, "afrabot: open!")
 
+@bot_command('close!')
+async def close_set(parsed, user, target, text):
+    await closed_set(parsed, user, target, text)
+
 @bot_command('closed!')
 async def closed_set(parsed, user, target, text):
     bot = Bot()
