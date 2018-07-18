@@ -146,6 +146,7 @@ async def open_set(parsed, user, target, text):
     set_space(_OPEN)
     await check_state_change()
     bot.say(target, "Noted.")
+    bot.say(target, "afrabot: open!")
 
 @bot_command('closed!')
 async def closed_set(parsed, user, target, text):
@@ -153,6 +154,7 @@ async def closed_set(parsed, user, target, text):
     set_space(_CLOSED)
     await check_state_change()
     bot.say(target, "Noted.")
+    bot.say(target, "afrabot: close!")
 
 asyncio.ensure_future(wait_kick_space())
 asyncio.ensure_future(check_room_status())
