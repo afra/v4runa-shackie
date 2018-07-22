@@ -30,7 +30,7 @@ async def update_spaceapi(state):
         return
 
     state = 0 if state == _CLOSED else 1
-    url = 'https://spaceapi.afra.fe80.eu/status/{}/{}'.format(AFRA_TOKEN, state)
+    url = 'https://spaceapi.afra.fe80.eu/v1/status/{}/{}'.format(AFRA_TOKEN, state)
 
     try:
         async with aiohttp.ClientSession(raise_for_status=True) as session:
