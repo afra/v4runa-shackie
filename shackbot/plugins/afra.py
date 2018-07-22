@@ -52,6 +52,7 @@ def say_state(state, target=None):
     else:
         for channel in AFRA_NOTIFICATION_CHANNELS:
             bot.say(channel, "The space is now %s." % human[state])
+            bot.say(target, "afrabot: %s!", human[state])
 
 async def check_state_change():
     ts_state, _ = get_space()
@@ -146,7 +147,6 @@ async def open_set(parsed, user, target, text):
     set_space(_OPEN)
     await check_state_change()
     bot.say(target, "Noted.")
-    bot.say(target, "afrabot: open!")
 
 @bot_command('close!')
 async def close_set(parsed, user, target, text):
@@ -158,7 +158,6 @@ async def closed_set(parsed, user, target, text):
     set_space(_CLOSED)
     await check_state_change()
     bot.say(target, "Noted.")
-    bot.say(target, "afrabot: close!")
 
 asyncio.ensure_future(wait_kick_space())
 asyncio.ensure_future(check_room_status())
