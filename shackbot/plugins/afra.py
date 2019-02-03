@@ -52,7 +52,6 @@ def say_state(state, target=None):
     else:
         for channel in AFRA_NOTIFICATION_CHANNELS:
             bot.say(channel, "The space is now %s." % human[state])
-            bot.say(target, "afrabot: %s!" % human[state])
 
 async def check_state_change():
     ts_state, _ = get_space()
