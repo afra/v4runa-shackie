@@ -52,6 +52,8 @@ def say_state(state, target=None):
     else:
         for channel in AFRA_NOTIFICATION_CHANNELS:
             bot.say(channel, "The space is now %s." % human[state])
+    if state == _CLOSED:
+        bot.say(target, ".purge")
 
 async def check_state_change():
     ts_state, _ = get_space()
